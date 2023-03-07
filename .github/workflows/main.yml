@@ -1,0 +1,38 @@
+name: Deploy do Ambiente Github para AWS Elastic Beanstalk
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Efetua Checkout Atualizado da Master
+        uses: actions/checkout@master
+        
+      - name: Gera o Arquivo zip para ser Buildado 
+        run: zip -r deploy-ambiente-elastic-beanstalk.zip * -x "**node_modules**"
+        
+      - name: Pega o timestamp do momento
+        uses: gerred/actions/current-time@master
+        id: tempo-atual-em-timestamp
+        
+      - name: Roda string replace do timestamp para ser utilizado no versionamento do bucket
+        uses: frabert/replace-string-action@master
+        id: formatacao-timestamp
+        with:
+          pattern: '[:\.]+'
+          string: "${{ steps.tempo-atual-em-timestamp.outputs.time }}"
+          replace-with: '-'
+          flags: 'g'
+          
+      - name: Etapa de Deploy no Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v14
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: ambiente-elastic-beanstalk
+          environment_name: Ambiente-elastic-beanstalk-env
+          version_label: "deploy-ambiente-elastic-beanstalk-${{ steps.formatacao-timestamp.outputs.replaced }}"
+          region: us-east-1
+          deployment_package: deploy-ambiente-elastic-beanstalk.zip
