@@ -5,17 +5,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src="https://www.wolk.com.br/wp-content/themes/wolk/img/wolk-white.png" className="App-logo" alt="logo" />
         <p>
-          Felipe conseguiu <code>src/App.js</code> chegar até aqui and save to reload.
+          Ambiente Elaborado com Git Actions, Docker e Elastic Beanstalk
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          by Felipe Augusto
         </a>
       </header>
     </div>
