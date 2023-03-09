@@ -32,7 +32,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: ambiente-elastic-beanstalk
-          environment_name: Ambiente-elastic-beanstalk-env
+          environment_name: Ambiente-elastic-beanstalk-env-1
           version_label: "deploy-ambiente-elastic-beanstalk-${{ steps.formatacao-timestamp.outputs.replaced }}"
           region: us-east-1
           deployment_package: deploy-ambiente-elastic-beanstalk.zip
